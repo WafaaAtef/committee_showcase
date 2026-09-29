@@ -52,6 +52,13 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
+const path = require('path');
+
+const frontendPath = path.join(__dirname, '../../frontend');
+
+app.use(express.static(frontendPath));
+
+
 app.use(express.json());
 
 app.get('/health', (req, res) => {
@@ -70,6 +77,10 @@ app.use((err, req, res, next) => {
   console.error(err);
   res.status(500).json({ error: 'Internal server error' });
 });
+const PORT = process.env.PORT || 3000;
 
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
 
-module.exports = app;
+//module.exports = app;
